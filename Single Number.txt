@@ -1,0 +1,49 @@
+Given a non-empty array of integers, every element appears twice except for one. Find that single one.
+
+Note:
+
+Your algorithm should have a linear runtime complexity. Could you implement it without using extra memory?
+
+Example 1:
+
+Input: [2,2,1]
+Output: 1
+Example 2:
+
+Input: [4,1,2,1,2]
+Output: 4
+
+python3
+class Solution:
+    def singleNumber(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: int
+        """
+        # 用數學
+        return 2*sum(set(nums))-sum(nums) 
+                 
+        # or 用xor的特性，兩個一樣的數字xor=0，剩下的就是只有一次的
+        res = 0
+        for num in nums:
+            res ^= num
+        return res
+
+c++
+class Solution {
+public:
+    int singleNumber(vector<int>& nums) {
+        set<int> s(nums.begin(),nums.end());
+        int sum1 = std::accumulate(s.begin(), s.end(), 0);
+        int sum2 = std::accumulate(nums.begin(), nums.end(), 0);
+        return 2*sum1-sum2;
+        
+        //or
+        int result = 0;
+        for(int i=0;i<nums.size();i++){
+            result ^= nums[i];
+        }
+        return result;
+    }
+};
+
