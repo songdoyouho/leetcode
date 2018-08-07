@@ -24,3 +24,20 @@ class Solution:
                     pass
                 else:
                     return [i, index]
+
+c++
+class Solution {
+public:
+    vector<int> twoSum(vector<int>& nums, int target) {
+     int n = nums.size();
+        unordered_map<int, int> mp; 
+        for (int i = 0; i < n; i++) {
+            if (mp.find(target - nums[i]) != mp.end()){
+                cout << i << " " <<mp[target - nums[i]] << "\n";
+                return {mp[target - nums[i]], i};
+            }
+            cout << i << " " << nums[i] << "\n";
+            mp[nums[i]] = i; # 2是在 index 0 的地方！
+        }
+    }
+};
