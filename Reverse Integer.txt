@@ -1,0 +1,57 @@
+Given a 32-bit signed integer, reverse digits of an integer.
+
+Example 1:
+
+Input: 123
+Output: 321
+Example 2:
+
+Input: -123
+Output: -321
+Example 3:
+
+Input: 120
+Output: 21
+Note:
+Assume we are dealing with an environment which could only store integers within the 32-bit signed integer range: [−231,  231 − 1]. For the purpose of this problem, assume that your function returns 0 when the reversed integer overflows.
+
+python3
+class Solution:
+    def reverse(self, x):
+        """
+        :type x: int
+        :rtype: int
+        """
+        if x > -2**31 and x < 2**31 - 1:
+            if x > 0:
+                out = int(str(x)[::-1]) 
+                if out > -2**31 and out < 2**31 - 1:
+                    return out
+                else:
+                    return 0
+            elif x < 0:
+                flag = str(x)[0]
+                tmp = str(x)[1:]
+                out = int(flag+tmp[::-1])
+                if out > -2**31 and out < 2**31 - 1:
+                    return out
+                else:
+                    return 0
+            else:
+                return 0
+        else:
+            return 0
+
+c++
+class Solution {
+public:
+    int reverse(int x) {
+        long result = 0;
+        while(x != 0)
+        {
+            result = result*10 + x % 10;
+            x /= 10;
+        }
+        return (result > INT_MAX || result < INT_MIN)? 0 : result; //注意 ? 的用法 ?前面為判斷式 : 結果為 false 則 return 冒號左邊(0)，結果為 true 則 return 冒號右邊 (result)
+    }
+};
