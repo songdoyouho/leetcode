@@ -1,0 +1,54 @@
+Write a function to find the longest common prefix string amongst an array of strings.
+
+If there is no common prefix, return an empty string "".
+
+Example 1:
+
+Input: ["flower","flow","flight"]
+Output: "fl"
+Example 2:
+
+Input: ["dog","racecar","car"]
+Output: ""
+Explanation: There is no common prefix among the input strings.
+Note:
+
+All given inputs are in lowercase letters a-z.
+
+python3
+class Solution:
+    def longestCommonPrefix(self, strs):
+        """
+        :type strs: List[str]
+        :rtype: str
+        """
+        if not strs:
+            return ""
+        shortest = min(strs,key=len) # flow
+        for i, ch in enumerate(shortest): # ±o¨ì[(0,f),(1,l),(2,o),(3,w)]
+            for other in strs:
+                if other[i] != ch:
+                    return shortest[:i]
+        return shortest
+
+c++
+class Solution {
+public:
+    string longestCommonPrefix(vector<string>& strs) {
+        string res;
+        char c;
+        // Dealt with empty input
+        if(strs.size() < 1) return res;
+        // Loop through the length of each word
+        for(int i = 0; i < strs[0].size(); i++){
+            c = strs[0][i];
+            // if current length is longer than the word length
+            for(int j=0;j<strs.size();j++)
+                if(i+1 > strs[j].size() || c != strs[j][i]) return res;
+            // if the current character is shared by all of the words
+            // then add to the result string
+            res.push_back(c);
+        }
+        return res;
+    }
+};
