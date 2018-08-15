@@ -1,0 +1,76 @@
+Given a linked list, remove the n-th node from the end of list and return its head.
+
+Example:
+
+Given linked list: 1->2->3->4->5, and n = 2.
+
+After removing the second node from the end, the linked list becomes 1->2->3->5.
+Note:
+
+Given n will always be valid.
+
+Follow up:
+
+Could you do this in one pass?
+
+python3
+# Definition for singly-linked list.
+# class ListNode:
+#     def __init__(self, x):
+#         self.val = x
+#         self.next = None
+
+class Solution:
+    def removeNthFromEnd(self, head, n):
+        """
+        :type head: ListNode
+        :type n: int
+        :rtype: ListNode
+        """        
+        front = end = head
+        # 先把front位移n
+        for _ in range(n): 
+            front = front.next       
+        
+        if not front:
+            return head.next
+        
+        while front.next != None:
+            print(front.val, end.val)
+            front = front.next
+            end = end.next
+            
+        print(end.val)
+        end.next = end.next.next
+        return head
+
+c++
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode(int x) : val(x), next(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    ListNode* removeNthFromEnd(ListNode* head, int n) {
+        ListNode *t1 = head , *t2 = head;
+        for(int i=0;i<n;i++){
+            t1 = t1->next;
+        }
+        
+        if(!t1){
+            return head->next;
+        }
+        
+        while(t1->next){
+            t1 = t1->next;
+            t2 = t2->next;
+        }
+        ListNode *delete_target = t2->next;
+        t2->next = t2->next->next;
+        return head;
+    }
+};
