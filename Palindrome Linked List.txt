@@ -1,0 +1,89 @@
+Given a singly linked list, determine if it is a palindrome.
+
+Example 1:
+
+Input: 1->2
+Output: false
+Example 2:
+
+Input: 1->2->2->1
+Output: true
+Follow up:
+Could you do it in O(n) time and O(1) space?
+
+python3
+# Definition for singly-linked list.
+# class ListNode:
+#     def __init__(self, x):
+#         self.val = x
+#         self.next = None
+
+class Solution:
+    def isPalindrome(self, head):
+        """
+        :type head: ListNode
+        :rtype: bool
+        """
+        fast = slow = head
+        # find the middle node
+        while fast and fast.next:
+            fast = fast.next.next
+            slow = slow.next
+        # reverse the second half
+        node = None
+        while slow:
+            nxt = slow.next
+            slow.next = node
+            node = slow
+            slow = nxt
+        # compare
+        while node:
+            if node.val != head.val:
+                return False
+            node = node.next
+            head = head.next
+        return True
+
+c++
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode(int x) : val(x), next(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    bool isPalindrome(ListNode* head) {
+        if(head==NULL||head->next==NULL){
+            return true;
+        }
+        // find the middle node
+        ListNode *slow=head, *fast=head;
+        while(fast!=NULL && fast->next!=NULL){
+            slow = slow->next;
+            fast = fast->next->next;
+        }
+        // reverse 
+        ListNode *dummy = new ListNode(0);
+        dummy -> next = slow;
+        while (slow && slow -> next) {            
+            ListNode* temp = slow -> next;
+            slow -> next = temp -> next;
+            temp -> next = dummy -> next;
+            dummy -> next = temp;
+        }
+        slow = dummy -> next;
+        // compare
+        while(slow){
+            if(slow->val!=head->val)
+                return false;
+            slow = slow->next;
+            head = head->next;
+        }
+        
+        
+        return true;
+    }
+};
