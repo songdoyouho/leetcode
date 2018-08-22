@@ -1,0 +1,127 @@
+Given a binary tree, check whether it is a mirror of itself (ie, symmetric around its center).
+
+For example, this binary tree [1,2,2,3,4,4,3] is symmetric:
+
+    1
+   / \
+  2   2
+ / \ / \
+3  4 4  3
+But the following [1,2,2,null,3,null,3] is not:
+    1
+   / \
+  2   2
+   \   \
+   3    3
+Note:
+Bonus points if you could solve it both recursively and iteratively.
+
+python3
+iteratively
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, x):
+#         self.val = x
+#         self.left = None
+#         self.right = None
+
+class Solution:
+    def isSymmetric(self, root):
+        """
+        :type root: TreeNode
+        :rtype: bool
+        """
+        if root is None:
+            return True
+
+        stack = [[root.left, root.right]]
+
+        while len(stack) > 0:
+            pair = stack.pop(0)
+            left = pair[0]
+            right = pair[1]
+
+            if left is None and right is None:
+                continue
+            if left is None or right is None:
+                return False
+            if left.val == right.val:
+                print(left.val,right.val)
+                stack.insert(0, [left.left, right.right])
+
+                stack.insert(0, [left.right, right.left])
+            else:
+                return False
+        return True
+        
+recursively
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, x):
+#         self.val = x
+#         self.left = None
+#         self.right = None
+
+class Solution:
+    def isSymmetric(self, root):
+        """
+        :type root: TreeNode
+        :rtype: bool
+        """
+        if root is None:
+            return True
+
+        else:
+            return self.isMirror(root.left, root.right)
+        
+    def isMirror(self,left,right):
+        if left is None and right is None:
+            return True
+        if left is None or right is None:
+            return False
+        if left.val == right.val:
+            outPair = self.isMirror(left.left, right.right)
+            inPiar = self.isMirror(left.right, right.left)
+            return outPair and inPiar
+        else:
+            return False
+            
+c++
+recursively
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    bool isSymmetric(TreeNode* root) {
+        if(root == 0){
+            return true;
+        }
+        else{
+            return isMirror(root->left,root->right);
+        }
+    }
+    bool isMirror(TreeNode* left, TreeNode* right){
+        if(left ==0 && right ==0){
+            return true;
+        }
+        if(left ==0 || right ==0){
+            return false;
+        }
+        if (left->val==right->val){
+            bool outPair = isMirror(left->left,right->right);
+            bool inPair = isMirror(left->right,right->left);
+            return outPair && inPair;
+        }
+        else{
+            return false;
+        }
+    }
+};
+
